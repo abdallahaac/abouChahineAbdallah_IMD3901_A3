@@ -1,8 +1,6 @@
 AFRAME.registerComponent("add-model", {
 	init: function () {
 		let sceneEl = this.el;
-		let score = document.getElementById("score");
-		let scoreVal = 0;
 
 		sceneEl.addEventListener("click", function () {
 			let numOfDucksBeforeEvent =
@@ -13,8 +11,7 @@ AFRAME.registerComponent("add-model", {
 			if (numOfDucksBeforeEvent.length < 2) {
 				// create a new entity
 				let entity = document.createElement("a-entity");
-				scoreVal++;
-				score.innerText = "SCORE: " + scoreVal;
+
 				// set component values
 				entity.setAttribute("position", { x: 0.932, y: -5.108, z: 2.525 });
 				entity.setAttribute("rotation", { x: -180.0, y: 31.355, z: -180.0 });

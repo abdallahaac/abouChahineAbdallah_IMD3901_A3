@@ -1,25 +1,35 @@
-//require = include
 const express = require("express");
-//initialize library
 const app = express();
 const http = require("http");
-
 const server = http.createServer(app);
+const io = require("socket.io")(server); //our websockets library
 
 const LISTEN_PORT = 8080;
-const STATIC_PATH = __dirname + "/public/";
 
-//setting our routes
-// google.com + /route
-
-app.get("/", (req, res) => {
-	res.sendFile("index.html", { root: STATIC_PATH });
+//our routes
+app.get("/", function (req, res) {
+	res.sendFile("index.html", { root: __dirname + "/public/" });
 });
 
+//socket.io events
+io.on("connection", (socket) => {
+	console.log(socket.id + " is connected! HELLO!");
+
+	socket.on("disconnect", () => {
+		console.log(socket.id + " is disconnected. BYE!");
+	});
+
+	socket.on("red", (data) => {
+		console.log("red event triggered");
+		io.emit("color_change", { r: 255, g: 0, b: 0 });
+	});
+
+	socket.on("blue", (data) => {
+		console.log("blue event triggered");
+		io.emit("color_change", { r: 0, g: 0, b: 255 });
+	});
+});
+
+app.use(express.static(__dirname + "/public"));
 server.listen(LISTEN_PORT);
-
-//middleware
-// code being ran after the
-app.use(express.static(STATIC_PATH));
-
-console.log("listening on port: " + LISTEN_PORT);
+console.log("Listening to port: " + LISTEN_PORT);

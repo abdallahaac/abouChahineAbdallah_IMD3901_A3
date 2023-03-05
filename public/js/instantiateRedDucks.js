@@ -1,19 +1,15 @@
 AFRAME.registerComponent("add-red-model", {
 	init: function () {
 		let sceneEl = this.el;
-		let score = document.getElementById("score");
-		let scoreVal = 0;
 
 		sceneEl.addEventListener("click", function () {
 			let numOfDucksBeforeEvent = document.querySelectorAll("#red_rubber_duck");
 
 			// only add a new duck if there is less than 2 ducks in the scene
 			// 2 because there is the big rubber duck in pool with the same id
-			if (numOfDucksBeforeEvent.length < 1) {
+			if (numOfDucksBeforeEvent.length < 2) {
 				// create a new entity
 				let entity = document.createElement("a-entity");
-				scoreVal++;
-				score.innerText = "SCORE: " + scoreVal;
 				// set component values
 				entity.setAttribute("position", { x: 0.932, y: -5.108, z: 2.525 });
 				entity.setAttribute("rotation", { x: -180.0, y: 31.355, z: -180.0 });

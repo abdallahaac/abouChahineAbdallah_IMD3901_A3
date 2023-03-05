@@ -18,21 +18,8 @@
 		<script src="./js/quack.js"></script>
 	</head>
 	<body>
-		<!-- <style>
+		<style>
 			@media (width>901px) {
-				span {
-					position: absolute;
-					z-index: 100;
-					font-family: sans-serif;
-					font-size: 70px;
-					color: #ffff;
-					background-color: rgb(163, 67, 34);
-					padding: 10px;
-					margin: 5px 10px;
-					border-radius: 6px;
-					border: 6px solid white;
-					box-shadow: rgba(3, 35, 17, 0.5) 3px 1px 5px;
-				}
 				#background {
 					position: absolute;
 					z-index: 101;
@@ -57,25 +44,41 @@
 					z-index: 200;
 					cursor: pointer;
 				}
+				.team {
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					font-size: 40px;
+					background-color: white;
+					padding: 20px;
+					width: 300px;
+					height: 100px;
+					text-align: center;
+					font-family: sans-serif;
+					font-weight: 900;
+					text-transform: capitalize;
+				}
+				.team.red {
+					background-color: red;
+					color: white;
+					cursor: pointer;
+				}
+				.team.blue {
+					background-color: rgb(99, 169, 226);
+					color: white;
+					cursor: pointer;
+				}
+				#choose {
+					position: absolute;
+
+					transform: translateY(-200px);
+					color: white;
+					font-size: 40px;
+					font-family: sans-serif;
+					font-weight: 900;
+				}
 			}
 			@media screen and (max-width: 992px) {
-				span {
-					font-size: 40px;
-					bottom: 0;
-					left: 45%;
-					transform: translate(-50%);
-					position: absolute;
-					z-index: 100;
-					font-family: sans-serif;
-					color: #ffff;
-					background-color: rgb(163, 67, 34);
-					padding: 10px;
-					margin: 5px 10px;
-					border-radius: 6px;
-					border: 6px solid white;
-					box-shadow: rgba(3, 35, 17, 0.5) 3px 1px 5px;
-					width: 190px;
-				}
 				#background {
 					position: absolute;
 					z-index: 101;
@@ -101,7 +104,7 @@
 					cursor: pointer;
 				}
 			}
-		</style> -->
+		</style>
 		<!-- Scene definition -->
 
 		<a-scene
@@ -109,30 +112,38 @@
 			cursor="rayOrigin: mouse"
 			renderer="antialias: true"
 			environment="preset: forest; groundTexture: walkernoise; fog: 0.9"
-			move-on-click
 			sound="src: #rainforest; on:click; loop: true; volume: 0.2; rolloffFactor: 0"
+			move-on-click
 		>
 			<div
 				class=""
 				id="background"
 				sound="src: #button1; on: click; poolSize: 3"
 			>
-				<div class="click-btn" id="click-btn">Click to play !</div>
+				<span id="choose">Choose your Team</span>
+				<div class="team blue" id="blue">blue</div>
+				<div class="team red" id="red">Red</div>
+				<!--  -->
 			</div>
 
-			<span id="score">SCORE:</span>
 			<!-- Environment -->
 			<a-entity id="environment" environment="preset:forest;"></a-entity>
 
 			<!-- Assets: Pool, duck, sound effects -->
 			<a-assets>
-				<a-asset-item id="pool" src="/assets/pool.glb"></a-asset-item>
+				<a-asset-item id="pool" src="../public/assets/pool.glb"></a-asset-item>
 			</a-assets>
 			<a-assets>
-				<a-asset-item id="red-pool" src="/assets/pool-red.glb"></a-asset-item>
+				<a-asset-item
+					id="red-pool"
+					src="../public/assets/pool.glb"
+				></a-asset-item>
 			</a-assets>
 			<a-assets>
 				<a-asset-item id="duck" src="/assets/Duck.glb"></a-asset-item>
+			</a-assets>
+			<a-assets>
+				<a-asset-item id="duck-red" src="/assets/Duck.glb"></a-asset-item>
 			</a-assets>
 			<!-- audio ...  -->
 			<a-assets>
@@ -199,6 +210,14 @@
 				quack
 			></a-entity>
 			<a-entity
+				id="red_rubber_duck"
+				position="-2.450 0 -2.102"
+				rotation="180.000 -42.145  180.000"
+				scale="0.7 0.7 0.7"
+				gltf-model="#duck-red"
+				quack
+			></a-entity>
+			<a-entity
 				add-model
 				id="vending_machine"
 				scale="0.5 0.5 0.5"
@@ -218,6 +237,14 @@
 				sound="src:#vending-noise; on:click"
 			>
 			</a-entity>
+			<script src="/socket.io/socket.io.js"></script>
+
+			<script>
+				let socket = io();
+				socket.on("connect", (userData) => {
+					console.log("I exist!");
+				});
+			</script>
 		</a-scene>
 	</body>
 </html>

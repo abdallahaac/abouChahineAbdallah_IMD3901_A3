@@ -1,16 +1,15 @@
-AFRAME.registerComponent("add-model", {
+AFRAME.registerComponent("add-red-model", {
 	init: function () {
 		let sceneEl = this.el;
 		let score = document.getElementById("score");
 		let scoreVal = 0;
 
 		sceneEl.addEventListener("click", function () {
-			let numOfDucksBeforeEvent =
-				document.querySelectorAll("#blue_rubber_duck");
+			let numOfDucksBeforeEvent = document.querySelectorAll("#red_rubber_duck");
 
 			// only add a new duck if there is less than 2 ducks in the scene
 			// 2 because there is the big rubber duck in pool with the same id
-			if (numOfDucksBeforeEvent.length < 2) {
+			if (numOfDucksBeforeEvent.length < 1) {
 				// create a new entity
 				let entity = document.createElement("a-entity");
 				scoreVal++;
@@ -22,8 +21,8 @@ AFRAME.registerComponent("add-model", {
 
 				// add GLB model to the entity
 				entity.setAttribute("gltf-model", "#duck");
-				entity.setAttribute("id", "blue_rubber_duck");
-				entity.setAttribute("animate-ducks", "");
+				entity.setAttribute("id", "red_rubber_duck");
+				entity.setAttribute("animate-red-ducks", "");
 				entity.setAttribute("check-entity", "");
 
 				// add the entity to the scene

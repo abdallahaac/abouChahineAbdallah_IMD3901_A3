@@ -1,4 +1,4 @@
-AFRAME.registerComponent("animate-ducks", {
+AFRAME.registerComponent("animate-red-ducks", {
 	init: function () {
 		let duck = this.el;
 		duck.addEventListener("animationcomplete__2", function () {
@@ -14,20 +14,20 @@ AFRAME.registerComponent("animate-ducks", {
 				// not all spawining in the same space
 				// generate random values for x and z
 				// return Math.random() * (max - min) + min;
-				let x = Math.random() * (1.467 - 0.754) + 0.754;
-				let z = Math.random() * (-2 - -0.5) + 0.5;
+				let x = Math.random() * (-3.171 - -3.294) + -3.294;
+				let z = Math.random() * (0.923 - -3.035) + -3.035;
 				let rotationY = Math.random() * (140 - -140) + -140;
 
 				console.log("x: " + x + " y: " + z);
 
 				// set component values
-				entity.setAttribute("position", { x: x - 0.8, y: 0.116, z: z - 1.3 });
+				entity.setAttribute("position", { x: x, y: 0.28, z: z });
 				entity.setAttribute("rotation", { x: -180.0, y: rotationY, z: -180.0 });
 				entity.setAttribute("scale", { x: 0.2, y: 0.2, z: 0.2 });
 
 				// add GLB model to the entity
 				entity.setAttribute("gltf-model", "#duck");
-				entity.setAttribute("id", "new_blue_rubber_duck");
+				entity.setAttribute("id", "new_red_rubber_duck");
 				console.log(entity);
 				document.querySelector("a-scene").appendChild(entity);
 			}

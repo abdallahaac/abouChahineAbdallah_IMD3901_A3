@@ -12,7 +12,9 @@
 
 		<script src="./js/moveOnClick.js"></script>
 		<script src="./js/instantiateDucks.js"></script>
+		<script src="./js/instantiateRedDucks.js"></script>
 		<script src="./js/animate-ducks.js"></script>
+		<script src="./js/animate-red-ducks.js"></script>
 		<script src="./js/quack.js"></script>
 	</head>
 	<body>
@@ -127,6 +129,9 @@
 				<a-asset-item id="pool" src="/assets/pool.glb"></a-asset-item>
 			</a-assets>
 			<a-assets>
+				<a-asset-item id="red-pool" src="/assets/pool-red.glb"></a-asset-item>
+			</a-assets>
+			<a-assets>
 				<a-asset-item id="duck" src="/assets/Duck.glb"></a-asset-item>
 			</a-assets>
 			<!-- audio ...  -->
@@ -179,9 +184,15 @@
 				scale="0.970 0.6 0.6"
 				gltf-model="/assets/pool.glb"
 			></a-entity>
+			<a-entity
+				position="-2.652 0.206 -2.207"
+				rotation="1.496 -180 177.319"
+				scale="0.8 0.6 0.6"
+				gltf-model="/assets/pool-red.glb"
+			></a-entity>
 
 			<a-entity
-				id="rubber_duck"
+				id="blue_rubber_duck"
 				position="0.832"
 				scale="0.7 0.7 0.7"
 				gltf-model="#duck"
@@ -198,12 +209,13 @@
 			>
 			</a-entity>
 			<a-entity
-				add-model
+				add-red-model
 				id="vending_machine-red"
 				scale="0.5 0.5 0.5"
 				gltf-model="/assets/vending-machine-red.glb"
 				position="-12.16 2.576 1.213"
 				rotation="0 90 0 "
+				sound="src:#vending-noise; on:click"
 			>
 			</a-entity>
 		</a-scene>

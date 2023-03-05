@@ -11,6 +11,10 @@ app.get("/", function (req, res) {
 	res.sendFile("index.html", { root: __dirname + "/public/" });
 });
 
+const foo = () => {
+	console.log("working");
+};
+
 //socket.io events
 io.on("connection", (socket) => {
 	console.log(socket.id + " is connected! HELLO!");
@@ -24,9 +28,8 @@ io.on("connection", (socket) => {
 		io.emit("color_change", { r: 255, g: 0, b: 0 });
 	});
 
-	socket.on("blue", (data) => {
-		console.log("blue event triggered");
-		io.emit("color_change", { r: 0, g: 0, b: 255 });
+	socket.on("scoreUpdate", (data) => {
+		console.log("okay it is working" + data.score);
 	});
 });
 

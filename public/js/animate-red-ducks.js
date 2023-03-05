@@ -2,10 +2,6 @@ AFRAME.registerComponent("animate-red-ducks", {
 	init: function () {
 		let duck = this.el;
 		duck.addEventListener("animationcomplete__2", function () {
-			console.log(
-				`Final position: x:${duck.object3D.position.x} y:${duck.object3D.position.y} z:${duck.object3D.position.z}`
-			);
-
 			if (duck.object3D.position.x == -6.107) {
 				duck.remove();
 				let entity = document.createElement("a-entity");
@@ -15,7 +11,7 @@ AFRAME.registerComponent("animate-red-ducks", {
 				// generate random values for x and z
 				// return Math.random() * (max - min) + min;
 				let x = Math.random() * (-3.171 - -3.294) + -3.294;
-				let z = Math.random() * (0.923 - -3.035) + -3.035;
+				let z = Math.random() * (0.074 - -3.035) + -3.035;
 				let rotationY = Math.random() * (140 - -140) + -140;
 
 				console.log("x: " + x + " y: " + z);
@@ -28,7 +24,6 @@ AFRAME.registerComponent("animate-red-ducks", {
 				// add GLB model to the entity
 				entity.setAttribute("gltf-model", "#duck");
 				entity.setAttribute("id", "new_red_rubber_duck");
-				console.log(entity);
 				document.querySelector("a-scene").appendChild(entity);
 			}
 		});

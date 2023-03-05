@@ -68,6 +68,12 @@
 					color: white;
 					cursor: pointer;
 				}
+				#blue-points {
+					color: rgb(99, 169, 226);
+				}
+				#red-points {
+					color: red;
+				}
 				#choose {
 					position: absolute;
 
@@ -76,6 +82,29 @@
 					font-size: 40px;
 					font-family: sans-serif;
 					font-weight: 900;
+				}
+				#team-points {
+					position: absolute;
+					z-index: 101;
+					top: 50%;
+					left: 50%;
+					transform: translate(-50%, 350px);
+					color: white;
+					font-size: 40px;
+					font-family: sans-serif;
+					font-weight: 900;
+				}
+
+				#chosen-team {
+					position: absolute;
+					top: 0;
+					left: 0;
+					font-size: 40px;
+					padding: 10px;
+					color: white;
+					font-family: sans-serif;
+					font-weight: 900;
+					z-index: 101;
 				}
 			}
 			@media screen and (max-width: 992px) {
@@ -121,10 +150,16 @@
 				sound="src: #button1; on: click; poolSize: 3"
 			>
 				<span id="choose">Choose your Team</span>
+
 				<div class="team blue" id="blue">blue</div>
 				<div class="team red" id="red">Red</div>
 				<!--  -->
 			</div>
+			<span id="chosen-team">Team: <span id="team-color"></span> </span>
+			<span id="team-points"
+				><span id="red-points"></span>vs
+				<span id="blue-points"></span>
+			</span>
 
 			<!-- Environment -->
 			<a-entity id="environment" environment="preset:forest;"></a-entity>
@@ -165,7 +200,7 @@
 			></audio>
 			<audio
 				id="rainforest"
-				src="//cdn.rawgit.com/michaelnebeling/src/master/rainforest_ambience-GlorySunz-1938133500.mp3"
+				src="//cdn.rawgit.com/michaelnebeling/src/master/rainforest_ambiendce-GlorySunz-1938133500.mp3"
 				crossorigin="anonymous"
 			></audio>
 
@@ -225,24 +260,53 @@
 				position="11.346 2.576 1.213"
 				rotation="0 270 0 "
 				sound="src:#vending-noise; on:click"
+				score="0"
 			>
 			</a-entity>
 			<a-entity
 				add-red-model
-				id="vending_machine-red"
+				id="vending-machine-red"
 				scale="0.5 0.5 0.5"
 				gltf-model="/assets/vending-machine-red.glb"
 				position="-12.16 2.576 1.213"
 				rotation="0 90 0 "
 				sound="src:#vending-noise; on:click"
+				score="0"
 			>
 			</a-entity>
+
 			<script src="/socket.io/socket.io.js"></script>
 
 			<script>
+				let vending_machine = document.querySelector("#vending-machine-red");
+
+				let redPoints = document.querySelector("#red-points");
+
+				let redScore = redPoints;
+
+				let score = 0;
+
+				console.log("score2: " + score);
+
+				score = parseInt(redScore.innerText);
+
+				vending_machine.addEventListener("click", () => {
+					score = parseInt(redPoints.innerText);
+					console.log("score: " + score);
+
+					socket.emit("scoreUpdate", { score });
+				});
+
 				let socket = io();
 				socket.on("connect", (userData) => {
 					console.log("I exist!");
+				});
+
+				//listen to event from server
+				socket.on("color_change", (data) => {
+					let colorStr = "rgb(" + data.r + "," + data.g + "," + data.b + ")";
+					console.log("color_change:" + colorStr);
+					choose.style.backgroundColor = colorStr;
 				});
 			</script>
 		</a-scene>

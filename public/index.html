@@ -143,6 +143,7 @@
 			environment="preset: forest; groundTexture: walkernoise; fog: 0.9"
 			sound="src: #rainforest; on:click; loop: true; volume: 0.2; rolloffFactor: 0"
 			move-on-click
+			id="scene"
 		>
 			<div
 				class=""
@@ -157,8 +158,8 @@
 			</div>
 			<span id="chosen-team">Team: <span id="team-color"></span> </span>
 			<span id="team-points"
-				><span id="red-points"></span>vs
-				<span id="blue-points"></span>
+				><span id="red-points">0</span>vs
+				<span id="blue-points">0</span>
 			</span>
 
 			<!-- Environment -->
@@ -278,35 +279,34 @@
 			<script src="/socket.io/socket.io.js"></script>
 
 			<script>
+				let socket = io();
+
+				let redPoints = document.getElementById("red-points");
 				let vending_machine = document.querySelector("#vending-machine-red");
 
-				let redPoints = document.querySelector("#red-points");
-
+				let redDuckModel = document.querySelector("#instantiated_rubber_duck");
 				let redScore = redPoints;
 
 				let score = 0;
-
-				console.log("score2: " + score);
 
 				score = parseInt(redScore.innerText);
 
 				vending_machine.addEventListener("click", () => {
 					score = parseInt(redPoints.innerText);
 					console.log("score: " + score);
-
 					socket.emit("scoreUpdate", { score });
+					redPoints.innerText = score;
 				});
 
-				let socket = io();
+				socket.on("scoreUpdateResponse", (data) => {
+					console.log("Score received from server: " + data.score);
+
+					redPoints.innerText = data.score;
+					// Update the score text on the page
+				});
+
 				socket.on("connect", (userData) => {
 					console.log("I exist!");
-				});
-
-				//listen to event from server
-				socket.on("color_change", (data) => {
-					let colorStr = "rgb(" + data.r + "," + data.g + "," + data.b + ")";
-					console.log("color_change:" + colorStr);
-					choose.style.backgroundColor = colorStr;
 				});
 			</script>
 		</a-scene>

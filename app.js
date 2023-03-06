@@ -11,10 +11,6 @@ app.get("/", function (req, res) {
 	res.sendFile("index.html", { root: __dirname + "/public/" });
 });
 
-const foo = () => {
-	console.log("working");
-};
-
 //socket.io events
 io.on("connection", (socket) => {
 	console.log(socket.id + " is connected! HELLO!");
@@ -29,7 +25,13 @@ io.on("connection", (socket) => {
 	});
 
 	socket.on("scoreUpdate", (data) => {
-		console.log("okay it is working" + data.score);
+		console.log("Score received from client: " + data.score);
+
+		// Do some processing with the score value...
+
+		data.score += 1;
+		// Emit the score back to the client
+		io.emit("scoreUpdateResponse", { score: data.score });
 	});
 });
 

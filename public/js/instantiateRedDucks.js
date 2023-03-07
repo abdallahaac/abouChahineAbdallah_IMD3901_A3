@@ -36,7 +36,6 @@ AFRAME.registerComponent("add-red-model", {
 				if (numOfDucksBeforeEvent.length < 2) {
 					// create a new entity
 					let entity = document.createElement("a-entity");
-					redPoints.innerText = data.score;
 
 					// set component values
 					entity.setAttribute("position", { x: -8.947, y: 0.245, z: 1.408 });
@@ -48,7 +47,9 @@ AFRAME.registerComponent("add-red-model", {
 					entity.setAttribute("id", "instantiated_rubber_duck");
 					entity.setAttribute("animate-red-ducks", "");
 					entity.setAttribute("check-entity", "");
-					entity.setAttribute("score", `${data.score - 1}`);
+
+					// emit a custom event to indicate that a new duck has been instantiated
+					entity.dispatchEvent(new Event("newDuckInstantiated"));
 
 					// add the entity to the page
 					scene.append(entity);

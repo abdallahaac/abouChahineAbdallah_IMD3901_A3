@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Hello, WebVR! - A-Frame</title>
+		<title>Duck Duck Go</title>
 		<meta name="description" content="Hello, WebVR! - A-Frame" />
 		<!--  note we are using 1.1.0 as most recent -->
 
@@ -280,31 +280,33 @@
 
 			<script>
 				let socket = io();
-
 				let redPoints = document.getElementById("red-points");
 				let vending_machine = document.querySelector("#vending-machine-red");
 
-				let redDuckModel = document.querySelector("#instantiated_rubber_duck");
-				let redScore = redPoints;
-
 				let score = 0;
+				score = parseInt(redPoints.innerText);
+				AFRAME.registerComponent("animate-red-ducks", {
+					init: function () {
+						let duck = document.getElementById("instantiated_rubber_duck");
+						duck.addEventListener("click", () => {
+							score = parseInt(redPoints.innerText);
+							console.log("score: " + score);
+							socket.emit("scoreUpdate", { score });
 
-				score = parseInt(redScore.innerText);
-
-				vending_machine.addEventListener("click", () => {
-					score = parseInt(redPoints.innerText);
-					console.log("score: " + score);
-					socket.emit("scoreUpdate", { score });
-					redPoints.innerText = score;
+							redPoints.innerText = score;
+						});
+					},
 				});
-
 				socket.on("scoreUpdateResponse", (data) => {
 					console.log("Score received from server: " + data.score);
-
 					redPoints.innerText = data.score;
 					// Update the score text on the page
 				});
 
+				let duck = document.getElementById("instantiated_rubber_duck");
+				duck.addEventListener("click", () => {
+					console.log("I was clicked");
+				});
 				socket.on("connect", (userData) => {
 					console.log("I exist!");
 				});

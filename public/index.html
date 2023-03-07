@@ -279,34 +279,79 @@
 			<script src="/socket.io/socket.io.js"></script>
 
 			<script>
+				class realTimeScore {
+					constructor(pointsId, duckId) {
+						this.points = document.getElementById(pointsId);
+						this.duck = document.getElementById(duckId);
+						this.score = 0;
+					}
+
+					updateScoreOnDuckClick() {
+						this.duck.addEventListener("click", () => {
+							console.log("This is the score" + this.score);
+							this.score = parseInt(this.points.innerText);
+							console.log("Score: " + this.score);
+							console.log(this.points.innerText);
+							let socketScore = this.score;
+							socket.emit("redScoreUpdate", { score: socketScore });
+						});
+					}
+
+					registerSocketListener() {
+						socket.on("redScoreUpdateResponse", (data) => {
+							console.log("Score received from server: " + data.score);
+							this.points.innerText = data.score;
+							// Update the score text on the page
+						});
+					}
+				}
+
+				// socket io code for red team real time score
 				let socket = io();
 				let redPoints = document.getElementById("red-points");
 				let vending_machine = document.querySelector("#vending-machine-red");
 
-				let score = 0;
-				score = parseInt(redPoints.innerText);
+				let redScore = 0;
+				// redScore = parseInt(redPoints.innerText);
+				// AFRAME.registerComponent("animate-red-ducks", {
+				// 	init: function () {
+				// 		let duck = document.getElementById("instantiated_rubber_duck");
+				// 		duck.addEventListener("click", () => {
+				// 			redScore = parseInt(redPoints.innerText);
+				// 			console.log("score: " + redScore);
+				// 			socket.emit("redScoreUpdate", { score: redScore });
+
+				// 			redPoints.innerText = redScore;
+				// 		});
+				// 	},
+				// });
+				let redClass = new realTimeScore(
+					"red-points",
+					"instantiated_rubber_duck"
+				);
+				redScore = parseInt(redPoints.innerText);
 				AFRAME.registerComponent("animate-red-ducks", {
 					init: function () {
-						let duck = document.getElementById("instantiated_rubber_duck");
-						duck.addEventListener("click", () => {
-							score = parseInt(redPoints.innerText);
-							console.log("score: " + score);
-							socket.emit("scoreUpdate", { score });
+						let redClass = new realTimeScore(
+							"red-points",
+							"instantiated_rubber_duck"
+						);
 
-							redPoints.innerText = score;
-						});
+						redClass.updateScoreOnDuckClick();
 					},
 				});
-				socket.on("scoreUpdateResponse", (data) => {
-					console.log("Score received from server: " + data.score);
-					redPoints.innerText = data.score;
-					// Update the score text on the page
+				redClass.registerSocketListener();
+
+				// socket.on("redScoreUpdateResponse", (data) => {
+				// 	console.log("Score received from server: " + data.score);
+				// 	redPoints.innerText = data.score;
+				// 	// Update the score text on the page
+				// });
+
+				socket.on("connect", (userData) => {
+					console.log("I exist!");
 				});
 
-				let duck = document.getElementById("instantiated_rubber_duck");
-				duck.addEventListener("click", () => {
-					console.log("I was clicked");
-				});
 				socket.on("connect", (userData) => {
 					console.log("I exist!");
 				});

@@ -24,14 +24,14 @@ io.on("connection", (socket) => {
 		io.emit("color_change", { r: 255, g: 0, b: 0 });
 	});
 
-	socket.on("scoreUpdate", (data) => {
+	socket.on("redScoreUpdate", (data) => {
 		console.log("Score received from client: " + data.score);
 
 		// Do some processing with the score value...
+		let processedScore = data.score + 1;
 
-		data.score += 1;
 		// Emit the score back to the client
-		io.emit("scoreUpdateResponse", { score: data.score });
+		io.emit("redScoreUpdateResponse", { score: processedScore });
 	});
 });
 

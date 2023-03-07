@@ -24,8 +24,9 @@ AFRAME.registerComponent("add-model", {
 			blue.style.opacity = 0;
 
 			sceneEl.addEventListener("click", function () {
-				let numOfDucksBeforeEvent =
-					document.querySelectorAll("#blue_rubber_duck");
+				let numOfDucksBeforeEvent = document.querySelectorAll(
+					"#instantiated_rubber_duck"
+				);
 
 				// only add a new duck if there is less than 2 ducks in the scene
 				// 2 because there is the big rubber duck in pool with the same id

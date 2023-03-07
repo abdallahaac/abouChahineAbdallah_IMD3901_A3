@@ -269,7 +269,7 @@
 			></audio>
 			<audio
 				id="rainforest"
-				src="//cdn.rawgit.com/michaelnebeling/src/master/rainforest_ambience-GlorySunz-1938133500.mp3"
+				src="//cdn.rawgit.com/michaelnebeling/src/master/rainforest_ambence-GlorySunz-1938133500.mp3"
 				crossorigin="anonymous"
 			></audio>
 
@@ -460,7 +460,10 @@
 						);
 
 						blueTeam.duck.addEventListener("animationcomplete__2", () => {
-							blueTeam.duck.remove();
+							let blueDuck = document.getElementById(
+								"instantiated_rubber_duck"
+							);
+							blueDuck.remove();
 							let entity = document.createElement("a-entity");
 
 							// let the new generated ducks be spawn within the pool

@@ -4,8 +4,7 @@ AFRAME.registerComponent("add-model", {
 	},
 	init: function () {
 		let sceneEl = this.el;
-		let bluePoints = document.getElementById("blue-points");
-		let data = this.data;
+		let scene = document.getElementById("scene");
 
 		let teamColor = document.getElementById("team-color");
 
@@ -34,22 +33,20 @@ AFRAME.registerComponent("add-model", {
 					// create a new entity
 					let entity = document.createElement("a-entity");
 
-					bluePoints.innerText = data.score;
-					data.score++;
-
 					// set component values
-					entity.setAttribute("position", { x: 0.932, y: -5.108, z: 2.525 });
+					entity.setAttribute("position", { x: 9.633, y: 0.14, z: 1.821 });
 					entity.setAttribute("rotation", { x: -180.0, y: 31.355, z: -180.0 });
 					entity.setAttribute("scale", { x: 0.3, y: 0.3, z: 0.3 });
 
 					// add GLB model to the entity
 					entity.setAttribute("gltf-model", "#duck");
-					entity.setAttribute("id", "blue_rubber_duck");
+					entity.setAttribute("id", "instantiated_rubber_duck");
 					entity.setAttribute("animate-ducks", "");
 					entity.setAttribute("check-entity", "");
 
 					// add the entity to the scene
-					sceneEl.appendChild(entity);
+					scene.append(entity);
+
 					let numOfDucksAfterEvent = document.createElement("a-entity");
 					// dynamic-body="grabbable: true"
 

@@ -280,10 +280,11 @@
 
 			<script>
 				class realTimeScore {
-					constructor(pointsId, duckId) {
+					constructor(team, pointsId, duckId) {
 						this.points = document.getElementById(pointsId);
 						this.duck = document.getElementById(duckId);
 						this.score = 0;
+						this.team = team;
 					}
 
 					updateScoreOnDuckClick() {
@@ -293,12 +294,12 @@
 							console.log("Score: " + this.score);
 							console.log(this.points.innerText);
 							let socketScore = this.score;
-							socket.emit("redScoreUpdate", { score: socketScore });
+							socket.emit(`${this.team}ScoreUpdate`, { score: socketScore });
 						});
 					}
 
-					registerSocketListener() {
-						socket.on("redScoreUpdateResponse", (data) => {
+					listenForScoreUpdateResponse() {
+						socket.on(`${this.team}ScoreUpdateResponse`, (data) => {
 							console.log("Score received from server: " + data.score);
 							this.points.innerText = data.score;
 							// Update the score text on the page
@@ -325,22 +326,127 @@
 				// 		});
 				// 	},
 				// });
-				let redClass = new realTimeScore(
+
+				//red team code
+
+				let redTeam = new realTimeScore(
+					"red",
 					"red-points",
 					"instantiated_rubber_duck"
 				);
-				redScore = parseInt(redPoints.innerText);
 				AFRAME.registerComponent("animate-red-ducks", {
 					init: function () {
-						let redClass = new realTimeScore(
+						let redTeam = new realTimeScore(
+							"red",
 							"red-points",
 							"instantiated_rubber_duck"
 						);
 
-						redClass.updateScoreOnDuckClick();
+						redTeam.duck.setAttribute(
+							"animation__1",
+							"property:position;dur:2000; from: -8.947  0.245 1.408; to: -4.976 2.468 -0.226;easing:easeInOutCubic; startEvents:click;"
+						);
+						redTeam.duck.setAttribute(
+							"animation__2",
+							"property:position;dur:2000; from: -4.976 2.468 -0.226; to:-2.700 0.191 -1.015; easing:easeInOutCubic; startEvents:animationcomplete__1;"
+						);
+						//
+						redTeam.duck.addEventListener("animationcomplete__2", () => {
+							redTeam.duck.remove();
+							let entity = document.createElement("a-entity");
+
+							// let the new generated ducks be spawn within the pool
+							// not all spawining in the same space
+							// generate random values for x and z
+							// return Math.random() * (max - min) + min;
+							let x = Math.random() * (-3.171 - -3.294) + -3.294;
+							let z = Math.random() * (0.074 - -3.035) + -3.035;
+							let rotationY = Math.random() * (140 - -140) + -140;
+
+							console.log("x: " + x + " y: " + z);
+
+							// set component values
+							entity.setAttribute("position", { x: x, y: 0.28, z: z });
+							entity.setAttribute("rotation", {
+								x: -180.0,
+								y: rotationY,
+								z: -180.0,
+							});
+							entity.setAttribute("scale", { x: 0.2, y: 0.2, z: 0.2 });
+
+							// add GLB model to the entity
+							entity.setAttribute("gltf-model", "#duck");
+							entity.setAttribute("id", "new_red_rubber_duck");
+							document.querySelector("a-scene").appendChild(entity);
+						});
+						redTeam.updateScoreOnDuckClick();
 					},
 				});
-				redClass.registerSocketListener();
+				redTeam.listenForScoreUpdateResponse();
+
+				// blue team code
+
+				let blueTeam = new realTimeScore(
+					"blue",
+					"blue-points",
+					"instantiated_rubber_duck"
+				);
+
+				// 0.932 0.436 -2.179
+
+				// to
+				//5.307  3.792 1.114
+				AFRAME.registerComponent("animate-ducks", {
+					init: function () {
+						let blueTeam = new realTimeScore(
+							"blue",
+							"blue-points",
+							"instantiated_rubber_duck"
+						);
+						blueTeam.duck.setAttribute(
+							"animation__1",
+							"property:position;dur:2000; from: 9.633 0.140 1.821; to: 5.307 2.102 -2.179;easing:easeInOutCubic; startEvents:click;"
+						);
+						blueTeam.duck.setAttribute(
+							"animation__2",
+							"property:position;dur:2000; from: 5.307 2.102 -2.179; to:  0.932 -0.022-2.179; easing:easeInOutCubic; startEvents:animationcomplete__1;"
+						);
+
+						blueTeam.duck.addEventListener("animationcomplete__2", () => {
+							blueTeam.duck.remove();
+							let entity = document.createElement("a-entity");
+
+							// let the new generated ducks be spawn within the pool
+							// not all spawining in the same space
+							// generate random values for x and z
+							// return Math.random() * (max - min) + min;
+							let x = Math.random() * (1.467 - 0.317) + 0.317;
+							let z = Math.random() * (-2 - -0.5) + 0.5;
+							let rotationY = Math.random() * (140 - -140) + -140;
+
+							// set component valuess
+							entity.setAttribute("position", {
+								x: x - 0.8,
+								y: 0.2,
+								z: z - 1.3,
+							});
+							entity.setAttribute("rotation", {
+								x: -180.0,
+								y: rotationY,
+								z: -180.0,
+							});
+							entity.setAttribute("scale", { x: 0.2, y: 0.2, z: 0.2 });
+
+							// add GLB model to the entity
+							entity.setAttribute("gltf-model", "#duck");
+							entity.setAttribute("id", "new_red_rubber_duck");
+							document.querySelector("a-scene").appendChild(entity);
+						});
+
+						blueTeam.updateScoreOnDuckClick();
+					},
+				});
+				blueTeam.listenForScoreUpdateResponse();
 
 				// socket.on("redScoreUpdateResponse", (data) => {
 				// 	console.log("Score received from server: " + data.score);

@@ -48,9 +48,8 @@ AFRAME.registerComponent("add-red-model", {
 					entity.setAttribute("animate-red-ducks", "");
 					entity.setAttribute("check-entity", "");
 
-					// emit a custom event to indicate that a new duck has been instantiated
-					entity.dispatchEvent(new Event("newDuckInstantiated"));
-
+					console.log("New duck instantiated");
+					console.log(entity);
 					// add the entity to the page
 					scene.append(entity);
 					let numOfDucksAfterEvent = document.createElement("a-entity");

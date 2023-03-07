@@ -33,6 +33,16 @@ io.on("connection", (socket) => {
 		// Emit the score back to the client
 		io.emit("redScoreUpdateResponse", { score: processedScore });
 	});
+
+	socket.on("blueScoreUpdate", (data) => {
+		console.log("Score received from client: " + data.score);
+
+		// Do some processing with the score value...
+		let processedScore = data.score + 1;
+
+		// Emit the score back to the client
+		io.emit("blueScoreUpdateResponse", { score: processedScore });
+	});
 });
 
 app.use(express.static(__dirname + "/public"));

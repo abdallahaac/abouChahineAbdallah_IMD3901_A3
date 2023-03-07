@@ -405,7 +405,8 @@
 						);
 						//
 						redTeam.duck.addEventListener("animationcomplete__2", () => {
-							redTeam.duck.remove();
+							let redDuck = document.getElementById("instantiated_rubber_duck");
+							redDuck.remove();
 							let entity = document.createElement("a-entity");
 
 							// let the new generated ducks be spawn within the pool

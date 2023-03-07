@@ -132,6 +132,74 @@
 					z-index: 200;
 					cursor: pointer;
 				}
+				#choose {
+					color: white;
+					font-size: 30px;
+					font-family: sans-serif;
+					position: absolute;
+
+					transform: translateY(-200px);
+				}
+				.team.red {
+					background-color: red;
+					color: white;
+					cursor: pointer;
+					font-size: 30px;
+					font-weight: 900;
+					font-family: sans-serif;
+				}
+				.team.blue {
+					background-color: rgb(99, 169, 226);
+					color: white;
+					cursor: pointer;
+					font-family: sans-serif;
+					font-size: 30px;
+					font-weight: 900;
+				}
+				.team {
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					font-size: 40px;
+					background-color: white;
+					padding: 20px;
+					width: 300px;
+					height: 50px;
+					text-align: center;
+					font-family: sans-serif;
+					font-weight: 900;
+					text-transform: capitalize;
+				}
+				#chosen-team {
+					position: absolute;
+					top: 0;
+					left: 0;
+					font-size: 40px;
+					padding: 10px;
+					color: white;
+					font-family: sans-serif;
+					font-weight: 900;
+					z-index: 101;
+				}
+				#blue-points {
+					color: rgb(99, 169, 226);
+					padding: 10px;
+				}
+				#red-points {
+					color: red;
+					padding: 10px;
+				}
+				#team-points {
+					position: absolute;
+					z-index: 101;
+					top: 50%;
+					left: 50%;
+					transform: translate(-50%, 250px);
+					color: white;
+					font-size: 40px;
+					font-family: sans-serif;
+					font-weight: 900;
+				}
 			}
 		</style>
 		<!-- Scene definition -->
@@ -201,7 +269,7 @@
 			></audio>
 			<audio
 				id="rainforest"
-				src="//cdn.rawgit.com/michaelnebeling/src/master/rainforest_ambiendce-GlorySunz-1938133500.mp3"
+				src="//cdn.rawgit.com/michaelnebeling/src/master/rainforest_ambience-GlorySunz-1938133500.mp3"
 				crossorigin="anonymous"
 			></audio>
 
@@ -296,6 +364,7 @@
 							let socketScore = this.score;
 							socket.emit(`${this.team}ScoreUpdate`, { score: socketScore });
 						});
+						this.duck.setAttribute("sound", "src:#quacking; on:click");
 					}
 
 					listenForScoreUpdateResponse() {
@@ -309,25 +378,6 @@
 
 				// socket io code for red team real time score
 				let socket = io();
-				let redPoints = document.getElementById("red-points");
-				let vending_machine = document.querySelector("#vending-machine-red");
-
-				let redScore = 0;
-				// redScore = parseInt(redPoints.innerText);
-				// AFRAME.registerComponent("animate-red-ducks", {
-				// 	init: function () {
-				// 		let duck = document.getElementById("instantiated_rubber_duck");
-				// 		duck.addEventListener("click", () => {
-				// 			redScore = parseInt(redPoints.innerText);
-				// 			console.log("score: " + redScore);
-				// 			socket.emit("redScoreUpdate", { score: redScore });
-
-				// 			redPoints.innerText = redScore;
-				// 		});
-				// 	},
-				// });
-
-				//red team code
 
 				let redTeam = new realTimeScore(
 					"red",
@@ -379,6 +429,7 @@
 							entity.setAttribute("id", "new_red_rubber_duck");
 							document.querySelector("a-scene").appendChild(entity);
 						});
+
 						redTeam.updateScoreOnDuckClick();
 					},
 				});
@@ -392,10 +443,6 @@
 					"instantiated_rubber_duck"
 				);
 
-				// 0.932 0.436 -2.179
-
-				// to
-				//5.307  3.792 1.114
 				AFRAME.registerComponent("animate-ducks", {
 					init: function () {
 						let blueTeam = new realTimeScore(

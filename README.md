@@ -8,6 +8,10 @@ Run the following two commands
 ```bash
 npm init -y 
 ```
+
+```bash
+npm i socket.io
+```
 and
 ```bash
 node app.js

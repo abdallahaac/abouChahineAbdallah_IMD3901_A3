@@ -19,15 +19,15 @@ npm run dev
 
 ## Overview of what you did (i.e., what are the controls? Why this design?)
 
-I created an A-Frame JS project with wasd controls for desktop and touch controls for mobile devices. The scene features a duck vending machine that generates a new duck when clicked. The duck can then be animated towards an inflatable pool by clicking on it. To enhance the immersive experience, ambient, vending machine, and duck sounds have been added to support the scene. The design of the controls was selected to provide a seamless experience for desktop and mobile users. The wasd controls offer a familiar and intuitive way to navigate the scene for desktop users, while touch controls provide a more natural experience for mobile users. The touch controls allow mobile navigation by touching different areas in the scene to move forward and looking down and touching the scene to move backwards.
+The A-Frame JS project I created offers users the option to choose their team by selecting either red or blue from a welcome screen. Once a team has been picked, the user can click on their respective vending machine to generate a new rubber duck. The scene features touch controls for mobile devices and wasd controls for desktop, providing a seamless and intuitive navigation experience. Users can animate their new rubber ducks towards an inflatable pool by clicking on them. To enhance the immersive experience, ambient, vending machine, and duck sounds have been added to support the scene. Each time a duck is sent to the inflatable pool, the score UI is updated for all connected players.
 
 ## What was challenging?
 
-While creating the A-Frame JS project, my biggest challenge was enabling touch/grabbing and physics. I initially intended for the user to be able to grab the duck from the vending machine and drop it in the inflatable pool. However, I encountered difficulties implementing this feature due to outdated physics and grabbing components that I added to the project. Despite my efforts, I could not resolve the errors and make the touch/grabbing and physics functional. 
+While working on the A-Frame JS project, my biggest challenge was updating the UI for all connecting users via Socket.io. Initially, I had the instantiated ducks appended to the vending machine element, but this caused several issues. I couldn't add an event listener to the instantiated duck to increment the score, which made updating the UI impossible. Therefore, I had to refactor the code to append the ducks to the scene and update the UI through the socket. This was challenging, but I was eventually able to make it work.
 
 ## What went well (i.e., how did you solve the above challenges?).
 
-In my A-Frame JS project, I created 3D models for a duck vending machine and inflatable pool, added wasd controls for desktop and touch controls for mobile devices, and implemented ambient and duck sounds. Despite challenges with touch/grabbing and physics, I solved the issue by animating the ducks instead and adding custom components for instantiating ducks and adding them to the pool. The sound effects, such as quacking when clicking on the ducks, added to the overall experience and made the project successful.
+I was able to successfully refactor my code using classes and instantiate two objects for the red team and blue team, which allowed for easy code reuse. One of the most successful features of the project was the real-time UI score for all users, which was implemented using sockets io. The sound effects, such as quacking when clicking on the ducks, added to the overall experience and made the project more immersive.
 
 ## GitHub Repository
 https://github.com/abdallahaac/abouChahineAbdallah_IMD3901_A2

@@ -30,11 +30,12 @@ While working on the A-Frame JS project, my biggest challenge was updating the U
 I was able to successfully refactor my code using classes and instantiate two objects for the red team and blue team, which allowed for easy code reuse. One of the most successful features of the project was the real-time UI score for all users, which was implemented using sockets io. The sound effects, such as quacking when clicking on the ducks, added to the overall experience and made the project more immersive.
 
 ## GitHub Repository
-https://github.com/abdallahaac/abouChahineAbdallah_IMD3901_A2
+https://github.com/abdallahaac/abouChahineAbdallah_IMD3901_A3
 
 ## Demo
-![](https://github.com/abdallahaac/abouChahineAbdallah_IMD3901_A2/blob/main/public/assets/demo-1.gif)
-![](https://github.com/abdallahaac/abouChahineAbdallah_IMD3901_A2/blob/main/public/assets/demo-2.gif)
+![](https://github.com/abdallahaac/abouChahineAbdallah_IMD3901_A3/blob/main/public/assets/duck_duck_go_red.gif)
+![](https://github.com/abdallahaac/abouChahineAbdallah_IMD3901_A3/blob/main/public/assets/duck_duck_go_blue.gif)
+
 
 
 

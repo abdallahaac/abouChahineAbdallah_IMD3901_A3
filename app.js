@@ -19,11 +19,6 @@ io.on("connection", (socket) => {
 		console.log(socket.id + " is disconnected. BYE!");
 	});
 
-	socket.on("red", (data) => {
-		console.log("red event triggered");
-		io.emit("color_change", { r: 255, g: 0, b: 0 });
-	});
-
 	socket.on("redScoreUpdate", (data) => {
 		console.log("Score received from client: " + data.score);
 

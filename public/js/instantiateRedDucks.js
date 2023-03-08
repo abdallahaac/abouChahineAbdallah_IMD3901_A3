@@ -4,8 +4,7 @@ AFRAME.registerComponent("add-red-model", {
 	},
 	init: function () {
 		let sceneEl = this.el;
-		let redPoints = document.getElementById("red-points");
-		let data = this.data;
+
 		let scene = document.getElementById("scene");
 
 		let background = document.getElementById("background");

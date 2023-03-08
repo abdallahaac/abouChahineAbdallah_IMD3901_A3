@@ -8,6 +8,7 @@ Run the following two commands
 ```bash
 npm init -y 
 ```
+and
 ```bash
 node app.js
 ```
